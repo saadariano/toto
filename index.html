@@ -329,6 +329,7 @@ textarea.paste-box:focus{border-color:var(--ac);}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
 /* ── LINK ACTIONS ── */
+.hide-actions .e-actions{display:none!important;}
 .e-actions{display:none;align-items:center;gap:.15rem;margin-left:.2rem;flex-shrink:0;}
 .e-actions.show{display:flex;}
 .ea-btn{background:none;border:none;cursor:pointer;font-size:.72rem;padding:.1rem .18rem;border-radius:3px;color:var(--mu2);transition:all .12s;line-height:1;}
@@ -418,6 +419,58 @@ textarea.paste-box:focus{border-color:var(--ac);}
 .cc-edit-btn:hover{background:var(--s3);}
 .cc-del-btn{color:#dc2626;}
 .cc-del-btn:hover{background:rgba(220,38,38,.1);}
+
+#btt{display:none;position:fixed;bottom:1.4rem;right:1.4rem;width:42px;height:42px;border-radius:50%;background:var(--ac);color:#fff;border:none;font-size:1.2rem;font-weight:800;cursor:pointer;box-shadow:0 3px 14px rgba(0,0,0,.22);z-index:998;align-items:center;justify-content:center;transition:all .2s;line-height:1;}
+#btt.show{display:flex;}
+#btt:hover{opacity:.85;transform:translateY(-3px);}
+
+
+.sc-act-btn{background:var(--s2);color:var(--mu);border:1px solid var(--bd2);}
+.sc-act-btn.sc-act-on{background:var(--acG);color:#fff;border-color:var(--acG);}
+
+
+/* ── MOBILE BOTTOM NAV ── */
+.mob-nav{display:none;position:fixed;bottom:0;left:0;right:0;height:58px;background:var(--card);border-top:1px solid var(--bd2);z-index:400;align-items:center;justify-content:space-around;padding:0 .5rem .4rem;}
+@media(max-width:860px){.mob-nav{display:flex;} .main{padding-bottom:64px;} #btt{bottom:70px;}}
+.mob-btn{display:flex;flex-direction:column;align-items:center;gap:1px;background:none;border:none;cursor:pointer;color:var(--mu);font-size:.58rem;font-weight:600;padding:.3rem .5rem;min-width:48px;transition:color .15s;position:relative;}
+.mob-btn:hover,.mob-btn.on{color:var(--ac);}
+.mob-btn .mob-ic{font-size:1.3rem;line-height:1;}
+.mob-btn.add-btn .mob-ic{width:42px;height:42px;border-radius:50%;background:var(--acG);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:#fff;box-shadow:0 3px 12px rgba(0,0,0,.2);margin-bottom:1px;}
+.mob-badge{position:absolute;top:2px;right:6px;background:#ef4444;color:#fff;font-size:.5rem;font-weight:700;padding:0 4px;border-radius:999px;min-width:14px;text-align:center;line-height:14px;}
+
+
+/* ── MOBILE TOP CONTACT/SHARE ── */
+.mob-top-bar{display:none;background:var(--card);border-bottom:1px solid var(--bd2);padding:.35rem .75rem;align-items:center;gap:.5rem;justify-content:flex-end;}
+@media(max-width:860px){.mob-top-bar{display:flex;}}
+.mob-top-btn{display:flex;align-items:center;gap:.3rem;background:var(--s2);border:1px solid var(--bd2);border-radius:8px;padding:.3rem .65rem;font-family:var(--ff);font-size:.72rem;font-weight:600;color:var(--mu);cursor:pointer;transition:all .14s;text-decoration:none;}
+.mob-top-btn:hover{background:var(--s3);color:var(--tx);}
+
+
+.tb-mob-only{display:none!important;}
+@media(max-width:860px){
+  .tb-desk-only{display:none!important;}
+  .tb-mob-only{display:flex!important;}
+}
+
+
+.reset-opt{display:flex;align-items:flex-start;gap:.75rem;padding:.75rem;background:var(--s1);border:1px solid var(--bd2);border-radius:10px;cursor:pointer;transition:all .14s;}
+.reset-opt:hover{background:var(--s2);border-color:var(--ac);}
+.reset-opt-ic{font-size:1.4rem;flex-shrink:0;}
+.reset-opt-title{font-weight:700;font-size:.8rem;margin-bottom:.15rem;}
+.reset-opt-desc{font-size:.7rem;color:var(--mu);line-height:1.45;}
+
+
+.lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin:.5rem 0;}
+.lang-pick-btn{display:flex;align-items:center;justify-content:center;gap:.45rem;padding:.6rem .75rem;background:var(--s1);border:2px solid var(--bd2);border-radius:10px;cursor:pointer;font-size:.85rem;font-weight:600;transition:all .15s;}
+.lang-pick-btn:hover{border-color:var(--ac);background:var(--s2);}
+.lang-pick-btn.on{border-color:var(--acG);background:rgba(5,150,105,.08);color:var(--acG);}
+.lang-flag{font-size:1.1rem;}
+.lang-code{font-family:var(--fm);font-size:.75rem;font-weight:700;}
+
+
+.compact-view .entries{grid-template-columns:repeat(auto-fill,minmax(220px,1fr));}
+.compact-view .cc{padding:.65rem .75rem;}
+
 </style>
 </head>
 <body>
@@ -440,13 +493,13 @@ textarea.paste-box:focus{border-color:var(--ac);}
   </div>
   <nav class="sb-nav" id="sbNav"></nav>
   <div class="sb-ft">
-    <div class="sb-ft-row">
-      <button class="sb-btn primary" onclick="openModal('updOv')">⟳ Update</button>
-      <button class="sb-btn sec" onclick="openModal('impOv')">⬆ Import</button>
-    </div>
     <button class="sb-btn primary" style="background:var(--acG);" onclick="openModal('addLinkOv')">＋ Add New Link</button>
     <div class="sb-ft-row">
+      <button class="sb-btn sec" onclick="openModal('impOv')">⬆ Import</button>
       <button class="sb-btn sec" onclick="exportBookmarks()">⬇ Export</button>
+    </div>
+    <div class="sb-ft-row">
+      <button class="sb-btn primary" onclick="openModal('updOv')">⟳ Update</button>
       <button class="sb-btn sec" onclick="openModal('settOv')">⚙ Settings</button>
     </div>
     <button class="sb-btn sec" onclick="openModal('aboutOv')" style="border-color:var(--bd2);">🦊 About</button>
@@ -455,11 +508,22 @@ textarea.paste-box:focus{border-color:var(--ac);}
 </aside>
 
 <!-- TOPBAR -->
+
+<!-- MOBILE TOP BAR: Contact + Share -->
+<div class="mob-top-bar" id="mobTopBar">
+  <a class="mob-top-btn" href="mailto:saadariano@gmail.com" title="Email">
+    ✉️ Email
+  </a>
+  <a class="mob-top-btn" href="https://wa.me/393899528528" target="_blank" rel="noopener" title="WhatsApp">
+    💬 WhatsApp
+  </a>
+  <button class="mob-top-btn" onclick="openShareModal()" title="Share">
+    🔗 Share
+  </button>
+</div>
+
 <header class="tb">
   <button class="tb-ham" onclick="toggleSb()">☰</button>
-  <button class="tb-nav-btn" onclick="goBack()" id="btnBack" title="Back">‹</button>
-  <button class="tb-nav-btn" onclick="goFwd()" id="btnFwd" title="Forward">›</button>
-  <button class="tb-nav-btn tb-home" onclick="go('home')" title="Home">⌂</button>
   <div class="tb-sch">
     <span class="tb-sch-ic">🔍</span>
     <input type="text" id="tbQ" placeholder="Search 24,000+ links… (Ctrl+K)" oninput="doSearch(this.value)" autocomplete="off">
@@ -467,10 +531,11 @@ textarea.paste-box:focus{border-color:var(--ac);}
   <div class="tb-r">
     <span class="tb-pill">🔗 <b id="pill">0</b></span>
     <button class="tb-icon-btn" style="color:var(--acG);border-color:var(--acG);" onclick="openModal('addLinkOv')">＋ <span>Add</span></button>
-    <button class="tb-icon-btn" id="tbPostsBtn" onclick="goSpecial('__posts__')">📋 <span>Posts</span></button>
-    <button class="tb-icon-btn" id="tbFavsBtn" onclick="goSpecial('__favs__')">❤️ <b id="tbFavCt"></b></button>
-    <button class="tb-icon-btn" id="tbPinsBtn" onclick="goSpecial('__pins__')">📌 <b id="tbPinCt"></b></button>
-    <button class="tb-icon-btn" onclick="goSpecial('__deleted__')">🗑 <span>Deleted</span></button>
+    <button class="tb-icon-btn tb-desk-only" id="tbPostsBtn" onclick="goSpecial('__posts__')">📋 <span>Posts</span></button>
+    <button class="tb-icon-btn tb-desk-only" id="tbFavsBtn" onclick="goSpecial('__favs__')">❤️ <b id="tbFavCt"></b></button>
+    <button class="tb-icon-btn tb-desk-only" onclick="goSpecial('__deleted__')">🗑 <span>Deleted</span></button>
+    <a class="tb-icon-btn tb-mob-only" href="mailto:saadariano@gmail.com" title="Email">✉️</a>
+    <button class="tb-icon-btn tb-mob-only" onclick="openShareModal()" title="Share">🔗</button>
   </div>
 </header>
 
@@ -672,10 +737,6 @@ textarea.paste-box:focus{border-color:var(--ac);}
       <div><div class="setting-label">📂 Auto-Expand First Section</div><div class="setting-desc">Automatically open the first section in each category</div></div>
       <label class="toggle"><input type="checkbox" id="settAutoExp" onchange="saveSetting('autoExp',this.checked)" checked><span class="toggle-sl"></span></label>
     </div>
-    <div class="setting-row">
-      <div><div class="setting-label">✏️ Link Actions</div><div class="setting-desc">Show edit, delete, pin, favorite, copy &amp; share on links</div></div>
-      <label class="toggle"><input type="checkbox" id="settActions" onchange="saveSetting('showActions',this.checked)"><span class="toggle-sl"></span></label>
-    </div>
     <div style="margin-top:1rem;padding-top:1rem;border-top:1px solid var(--bd);">
       <button class="act-btn sec" style="margin-bottom:.4rem;" onclick="exportBookmarks()">⬇ Export My Bookmarks</button>
       <button class="act-btn danger" onclick="closeModal('settOv');openModal('resetOv')">🗑 Reset All Data</button>
@@ -710,7 +771,8 @@ const SETTINGS = {
   theme: 'light',
   showCounts: true,
   autoExp: true,
-  showActions: false
+  showActions: false,
+  lang: 'en'
 };
 
 function saveSetting(key, val) {
@@ -718,6 +780,9 @@ function saveSetting(key, val) {
   localStorage.setItem('ln-settings', JSON.stringify(SETTINGS));
   if (key === 'showCounts') { buildNav(); render(); }
   if (key === 'showActions') render();
+  if (key === 'compact') document.body.classList.toggle('compact-view', !!val);
+  if (key === 'newTab') {} // handled in entryHTML
+  if (key === 'showNew') render();
 }
 
 function loadSettings() {
@@ -732,6 +797,7 @@ function loadSettings() {
   if (settDel) settDel.checked = SETTINGS.showDel;
   if (settCounts) settCounts.checked = SETTINGS.showCounts;
   if (settAutoExp) settAutoExp.checked = SETTINGS.autoExp;
+  document.body && document.body.classList.toggle('hide-actions', !SETTINGS.showActions);
 }
 
 // ════════════ CATEGORIES ════════════
@@ -763,7 +829,7 @@ const CATS = {
   storage:          {ic:'☁️',nm:'Storage',              ds:'Cloud storage, file hosting and backups'},
 };
 
-const WIKI = ['video','audio','gaming','reading','downloading','torrenting','mobile','linux','privacy','ai','misc','nonenglish'];
+const WIKI = ['video','audio','gaming','reading','downloading','torrenting','educational','mobile','linux','privacy','ai','misc','nonenglish','storage'];
 const TOOLS = ['system-tools','file-tools','internet-tools','social','text-tools','gaming-tools','image-tools','video-tools','audio-tools','educational-tools','developer-tools'];
 
 // Section icons
@@ -997,37 +1063,17 @@ function goNeLang(catId, lang, evt) {
 
 
 // ════════ HISTORY (back/forward) ════════
-let navHistory = ['home'], navIdx = 0;
 
-function histPush(p) {
-  navHistory = navHistory.slice(0, navIdx + 1);
-  if (navHistory[navHistory.length-1] !== p) { navHistory.push(p); navIdx = navHistory.length-1; }
-  updateNavBtns();
-}
-function goBack() {
-  if (navIdx > 0) { navIdx--; PAGE=navHistory[navIdx]; Q=''; document.getElementById('sbQ').value=''; document.getElementById('tbQ').value=''; buildNav(); render(); window.scrollTo(0,0); updateNavBtns(); }
-}
-function goFwd() {
-  if (navIdx < navHistory.length-1) { navIdx++; PAGE=navHistory[navIdx]; Q=''; document.getElementById('sbQ').value=''; document.getElementById('tbQ').value=''; buildNav(); render(); window.scrollTo(0,0); updateNavBtns(); }
-}
 
 function updateTopbarBadges() {
   const fc = document.getElementById('tbFavCt');
-  const pc = document.getElementById('tbPinCt');
   if (fc) fc.textContent = favLinks.size > 0 ? favLinks.size : '';
-  if (pc) pc.textContent = pinnedLinks.size > 0 ? pinnedLinks.size : '';
 }
 
-function updateNavBtns() {
-  const b = document.getElementById('btnBack'); const f = document.getElementById('btnFwd');
-  if(b) b.disabled = navIdx <= 0;
-  if(f) f.disabled = navIdx >= navHistory.length-1;
-}
 
 // ════════════ ROUTING ════════════
 function go(p) {
   PAGE=p; Q='';
-  histPush(p);
   document.getElementById('sbQ').value='';
   document.getElementById('tbQ').value='';
   buildNav(); render(); window.scrollTo(0,0);
@@ -1053,7 +1099,6 @@ function render() {
   if (PAGE === 'home') { renderHome(m); return; }
   if (PAGE === '__posts__') { renderPosts('all'); return; }
   if (PAGE === '__favs__') { renderCollection('favs'); return; }
-  if (PAGE === '__pins__') { renderCollection('pins'); return; }
   if (PAGE === '__deleted__') { renderDeleted(); return; }
   if (D[PAGE] !== undefined || CATS[PAGE]) { renderCat(m, PAGE); return; }
 }
@@ -1180,6 +1225,7 @@ function renderCat(m, id) {
         <h1 style="margin:0;">${cat.ic} ${esc(cat.nm)}</h1>
         <div class="sc-wrap" id="scWrap">
           <button class="sc-btn" onclick="toggleSubCat()" id="scBtn">📂 Sections ▾</button>
+          <button class="sc-btn sc-act-btn ${SETTINGS.showActions?'sc-act-on':''}" id="actToggleBtn" onclick="toggleLinkActions()">✏️ ${SETTINGS.showActions?'Actions ON':'Actions OFF'}</button>
           <div class="sc-dropdown" id="scDrop">${dropItems}</div>
         </div>
       </div>
@@ -1276,11 +1322,9 @@ function entryHTML(entry, secId) {
   if (desc) html += `<span class="e-desc">— ${esc(desc)}</span>`;
   if (isnew) html += `<span class="e-new">NEW</span>`;
 
-  const isPinned = pinnedLinks.has(url);
   const isFaved = favLinks.has(url);
   const actShow = SETTINGS.showActions ? ' show' : '';
   const actions = `<div class="e-actions${actShow}">
-    <button class="ea-btn ${isPinned?'pin-on':''}" onclick="togglePin('${esc(url)}',this)" title="${isPinned?'Unpin':'Pin'}">📌</button>
     <button class="ea-btn ${isFaved?'fav-on':''}" onclick="toggleFav('${esc(url)}',this)" title="${isFaved?'Unfavorite':'Favorite'}">❤️</button>
     <button class="ea-btn" onclick="copyLink('${esc(url)}')" title="Copy URL">📋</button>
     <button class="ea-btn" onclick="shareLink('${esc(url)}','${esc(label)}')" title="Share">🔗</button>
@@ -1385,9 +1429,20 @@ function loadSettingsUI() {
   const sc = document.getElementById('settCounts');
   const sa = document.getElementById('settAutoExp');
   const sact = document.getElementById('settActions');
-  if(sc) sc.checked = SETTINGS.showCounts;
-  if(sa) sa.checked = SETTINGS.autoExp;
+  const scomp = document.getElementById('settCompact');
+  const snew = document.getElementById('settNewBadge');
+  const stab = document.getElementById('settNewTab');
+  const langBtn = document.getElementById('langBtn');
+  if(sc) sc.checked = SETTINGS.showCounts !== false;
+  if(sa) sa.checked = SETTINGS.autoExp !== false;
   if(sact) sact.checked = SETTINGS.showActions || false;
+  if(scomp) scomp.checked = SETTINGS.compact || false;
+  if(snew) snew.checked = SETTINGS.showNew !== false;
+  if(stab) stab.checked = SETTINGS.newTab !== false;
+  if(langBtn) {
+    const meta = {en:'🇬🇧 EN', it:'🇮🇹 IT', fr:'🇫🇷 FR', es:'🇪🇸 ES', ar:'🇸🇦 AR'};
+    langBtn.textContent = meta[SETTINGS.lang||'en'] || '🇬🇧 EN';
+  }
 }
 
 // ════════════ AUTO FETCH ════════════
@@ -1666,24 +1721,65 @@ function exportBookmarks() {
 }
 
 // ════════════ RESET ════════════
-function doReset() {
-  D = deepClone(ORIG);
-  userDeleted = new Set();
-  openSecs = {};
-  localStorage.removeItem('ln-added');
-  localStorage.removeItem('ln-deleted');
+function doReset(type) {
+  if (type === 'full') {
+    D = deepClone(ORIG);
+    userDeleted = new Set();
+    openSecs = {};
+    localStorage.removeItem('ln-added');
+    localStorage.removeItem('ln-deleted');
+    activityLog = [];
+    localStorage.removeItem('ln-activity');
+    showToast(i18n('reset_done'));
+  } else if (type === 'updates') {
+    // Remove only links that were added via import/update (have isnew flag from activity)
+    // Keep links manually added by user
+    const manualAdded = JSON.parse(localStorage.getItem('ln-added-manual') || '[]');
+    D = deepClone(ORIG);
+    userDeleted = new Set(JSON.parse(localStorage.getItem('ln-deleted') || '[]'));
+    // Re-add manual links
+    for (const item of manualAdded) {
+      if (D[item.catId]) {
+        let sec = D[item.catId].find(s => s.n === item.secName);
+        if (!sec) { sec = {n: item.secName, e: []}; D[item.catId].unshift(sec); }
+        if (!sec.e.find(e => e.u === item.url)) {
+          sec.e.unshift({l: item.label, u: item.url, d: item.desc || '', m: [], isnew: false});
+        }
+      }
+    }
+    localStorage.removeItem('ln-added');
+    showToast(i18n('reset_done'));
+  } else if (type === 'activity') {
+    activityLog = [];
+    localStorage.removeItem('ln-activity');
+    showToast(i18n('reset_done'));
+  }
   closeModal('resetOv');
   buildNav(); render();
 }
 
 // ════════════ KEYBOARD ════════════
 document.addEventListener('keydown', e => {
-  if (e.key === 'Escape') { closeModal('updOv'); closeModal('impOv'); closeModal('settOv'); closeModal('resetOv'); closeModal('aboutOv'); closeModal('addLinkOv'); closeSb(); }
+  if (e.key === 'Escape') { closeModal('updOv'); closeModal('impOv'); closeModal('settOv'); closeModal('resetOv'); closeModal('aboutOv'); closeModal('addLinkOv'); closeModal('shareOv'); closeSb(); }
   if ((e.ctrlKey||e.metaKey) && e.key==='k') { e.preventDefault(); document.getElementById('tbQ').focus(); }
 });
 
 
 
+
+
+function toggleLinkActions() {
+  SETTINGS.showActions = !SETTINGS.showActions;
+  localStorage.setItem('ln-settings', JSON.stringify(SETTINGS));
+  const btn = document.getElementById('actToggleBtn');
+  if (btn) {
+    btn.textContent = SETTINGS.showActions ? '✏️ Actions ON' : '✏️ Actions OFF';
+    btn.style.background = SETTINGS.showActions ? 'var(--acG)' : 'var(--s2)';
+    btn.style.color = SETTINGS.showActions ? '#fff' : 'var(--mu)';
+    btn.style.borderColor = SETTINGS.showActions ? 'var(--acG)' : 'var(--bd2)';
+  }
+  render();
+}
 
 // ════ SUBCAT DROPDOWN ════
 function toggleSubCat() {
@@ -1704,55 +1800,45 @@ function toggleSubCat() {
 }
 
 function jumpToSec(secName) {
-  // Close dropdown
-  document.getElementById('scDrop')?.classList.remove('open');
-  // Find the sec-box with this data-secname
-  const all = document.querySelectorAll('.sec-box[data-secname]');
-  for (const box of all) {
-    if (box.getAttribute('data-secname') === secName || box.getAttribute('data-secname').startsWith(secName)) {
-      box.classList.add('op');
-      setTimeout(() => box.scrollIntoView({behavior:'smooth', block:'start'}), 30);
-      return;
-    }
+  const drop = document.getElementById('scDrop');
+  if (drop) drop.classList.remove('open');
+  function scrollTop(el) {
+    el.classList.add('op');
+    setTimeout(function() {
+      const tbEl = document.querySelector('.tb');
+      const tbH = tbEl ? tbEl.offsetHeight + 10 : 64;
+      const rect = el.getBoundingClientRect();
+      const scrollY = window.pageYOffset || document.documentElement.scrollTop || 0;
+      window.scrollTo({ top: Math.max(0, rect.top + scrollY - tbH), behavior: 'smooth' });
+    }, 60);
   }
-  // Fallback: match display name
-  const allNm = document.querySelectorAll('.sec-nm');
-  for (const el of allNm) {
-    const txt = el.textContent.trim();
-    const shortName = secName.includes(' > ') ? secName.split(' > ').pop() : secName;
-    if (txt === shortName || txt === secName) {
-      const box = el.closest('.sec-box');
-      if (box) { box.classList.add('op'); setTimeout(() => box.scrollIntoView({behavior:'smooth', block:'start'}), 30); return; }
+  const all = document.querySelectorAll('.sec-box[data-secname]');
+  for (const b of all) {
+    if (b.getAttribute('data-secname') === secName) { scrollTop(b); return; }
+  }
+  for (const b of all) {
+    const sn = b.getAttribute('data-secname') || '';
+    if (sn.startsWith(secName + ' > ') || sn === secName) { scrollTop(b); return; }
+  }
+  // Fallback: match short display name
+  const short = secName.includes(' > ') ? secName.split(' > ').pop() : secName;
+  for (const el of document.querySelectorAll('.sec-nm')) {
+    if (el.textContent.trim() === short) {
+      const b = el.closest('.sec-box');
+      if (b) { scrollTop(b); return; }
     }
   }
 }
 
+
 // ════════ LINK ACTIONS (pin/fav/copy/share/edit/delete) ════════
-let pinnedLinks = new Set(JSON.parse(localStorage.getItem('ln-pinned')||'[]'));
+const pinnedLinks = new Set(); // pins removed
 let favLinks = new Set(JSON.parse(localStorage.getItem('ln-favs')||'[]'));
 
 function savePinFav() {
-  localStorage.setItem('ln-pinned', JSON.stringify([...pinnedLinks]));
   localStorage.setItem('ln-favs', JSON.stringify([...favLinks]));
 }
 
-function togglePin(url, btn) {
-  let lbl = url;
-  for (const secs of Object.values(D)) { for (const s of secs) { const e=s.e.find(x=>x.u===url); if(e){lbl=e.l||url;break;} } if(lbl!==url)break; }
-  if (pinnedLinks.has(url)) { 
-    pinnedLinks.delete(url); 
-    if(btn){btn.classList.remove('pin-on'); btn.style.opacity=''; btn.title='Pin';}
-    showToast('📌 Unpinned');
-    addActivity('unpin', lbl, url, '');
-  } else { 
-    pinnedLinks.add(url); 
-    if(btn){btn.classList.add('pin-on'); btn.style.opacity='1'; btn.title='Unpin';}
-    showToast('📌 Pinned!');
-    addActivity('pin', lbl, url, '');
-  }
-  savePinFav();
-  buildNav(); // update badge count
-}
 function toggleFav(url, btn) {
   // Find label
   let lbl = url;
@@ -2167,7 +2253,6 @@ function goSpecial(p) {
   PAGE = p; Q = '';
   document.getElementById('sbQ').value = '';
   document.getElementById('tbQ').value = '';
-  histPush(p);
   buildNav(); renderSpecial(p); window.scrollTo(0,0);
   if (window.innerWidth <= 860) closeSb();
 }
@@ -2175,7 +2260,6 @@ function goSpecial(p) {
 function renderSpecial(p) {
   if (p === '__posts__') { renderPosts('all'); return; }
   if (p === '__favs__') { renderCollection('favs'); return; }
-  if (p === '__pins__') { renderCollection('pins'); return; }
   if (p === '__deleted__') { renderDeleted(); return; }
 }
 
@@ -2310,59 +2394,149 @@ function addActivity(type, label, url, extra) {
 
 function renderPosts(filter) {
   const m = document.getElementById('main');
-  const currentFilter = filter || 'all';
-  const FILTERS = ['all','add','update','delete','fav','pin','import'];
-  
-  let items = activityLog;
-  if (currentFilter !== 'all') items = items.filter(a => { if(currentFilter==='fav') return a.type==='fav'||a.type==='unfav'; if(currentFilter==='pin') return a.type==='pin'||a.type==='unpin'; if(currentFilter==='import') return a.type==='import'||a.type==='update'; return a.type===currentFilter; });
-  
-  const filtersH = FILTERS.map(f => 
-    `<button class="pf-btn ${currentFilter===f?'on':''}" onclick="renderPosts('${f}')">${
-      f==='all'?'All':f==='add'?'➕ Added':f==='update'?'🔄 Updates':f==='delete'?'🗑 Deleted':f==='fav'?'❤️ Favorites':f==='pin'?'📌 Pinned':'📥 Imports'
-    }</button>`
+  const cur = filter || 'all';
+  const FILTERS = ['all','add','update','delete','fav','import'];
+  const LABELS = {all:'All', add:'➕ Added', update:'🔄 Updates',
+                  delete:'🗑 Deleted', fav:'❤️ Favs', import:'📥 Imports'};
+  if (!window._actFolders) window._actFolders = {};
+
+  const filtersH = FILTERS.map(f =>
+    `<button class="pf-btn ${cur===f?'on':''}" onclick="renderPosts('${f}')">${LABELS[f]}</button>`
   ).join('');
-  
-  // Group by category
-  const catGrps = {}; const flat = [];
-  for (const a of items) {
-    let catId = null;
-    if (a.extra) {
-      const nm = a.extra.split(' › ')[0].trim();
-      catId = Object.keys(CATS).find(k => CATS[k] && CATS[k].nm === nm) || null;
+
+  // ── FAV filter: show live favLinks (same source as topbar ❤️) ──
+  if (cur === 'fav') {
+    const seen = new Set();
+    const favEntries = [];
+    for (const source of [D, ORIG]) {
+      for (const [catId, secs] of Object.entries(source)) {
+        for (const sec of secs) {
+          for (const entry of sec.e) {
+            if (favLinks.has(entry.u) && !userDeleted.has(entry.u) && !seen.has(entry.u)) {
+              seen.add(entry.u);
+              favEntries.push({entry, catId});
+            }
+          }
+        }
+      }
     }
-    if (catId) { if(!catGrps[catId]) catGrps[catId]=[]; catGrps[catId].push(a); }
-    else flat.push(a);
+    const rows = favEntries.length
+      ? favEntries.map(({entry, catId}) => {
+          const cat = CATS[catId] || {};
+          return `<div class="sr">
+            <div class="sr-info"><div class="sr-links">
+              <a class="sr-primary" href="${esc(entry.u)}" target="_blank" rel="noopener">${esc(entry.l||'')}</a>
+            </div>${entry.d ? `<div class="sr-desc">${esc(entry.d)}</div>` : ''}</div>
+            <span class="sr-cat">${cat.ic||'📁'} ${esc(cat.nm||catId)}</span>
+          </div>`;
+        }).join('')
+      : `<div class="act-empty">No favorites yet. Enable ✏️ Actions and click ❤️ on a link.</div>`;
+    m.innerHTML = `<div class="posts-page">
+      <div class="posts-hd"><h1>📋 Posts &amp; Activity</h1></div>
+      <div class="posts-filters">${filtersH}</div>
+      <div class="sr-list">${rows}</div>
+    </div>`;
+    return;
   }
 
+  // ── All other filters: use activity log ──
+  let items = activityLog;
+  if (cur !== 'all') {
+    items = items.filter(a => {
+      if (cur === 'import') return a.type === 'import' || a.type === 'update';
+      return a.type === cur;
+    });
+  }
+
+  // ── Render one activity item ──
   function aItem(a) {
-    const meta = ACT_META[a.type] || {icon:'📋',label:a.type,type:a.type};
+    const meta = ACT_META[a.type] || {icon:'📋', label:a.type, type:a.type};
     const date = new Date(a.ts).toLocaleString();
     const nb = a.isNew ? '<span class="act-new">NEW</span>' : '';
-    const lh = a.url ? `<a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.label||a.url)}</a>` : `<span>${esc(a.label||'')}</span>`;
-    const sh = a.extra ? `<span class="act-extra">${esc(a.extra.split(' › ').pop())}</span>` : '';
-    return `<div class="act-item act-type-${meta.type}"><div class="act-icon">${meta.icon}</div><div class="act-body"><div class="act-title">${lh}${nb}${sh}</div><div class="act-meta">${meta.label} · ${date}</div></div></div>`;
+    const lh = a.url
+      ? `<a href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.label||a.url)}</a>`
+      : `<span>${esc(a.label||'')}</span>`;
+    const sh = (a.extra && a.extra.includes(' › '))
+      ? `<span class="act-extra">${esc(a.extra.split(' › ').slice(1).join(' › '))}</span>` : '';
+    return `<div class="act-item act-type-${meta.type}">
+      <div class="act-icon">${meta.icon}</div>
+      <div class="act-body">
+        <div class="act-title">${lh}${nb}${sh}</div>
+        <div class="act-meta">${meta.label} · ${date}</div>
+      </div>
+    </div>`;
   }
 
+  // ── Group by category using extra field ──
+  const catGrps = {};   // catId -> items[]
+  const flat    = [];   // items without a category
+  for (const a of items) {
+    let cid = null;
+    if (a.extra) {
+      const nm = a.extra.split(' › ')[0].trim();
+      cid = Object.keys(CATS).find(k => CATS[k] && CATS[k].nm === nm) || null;
+    }
+    if (cid) { if (!catGrps[cid]) catGrps[cid] = []; catGrps[cid].push(a); }
+    else      { flat.push(a); }
+  }
+
+  // ── Build folder HTML ──
   let foldersH = '';
   for (const [cid, citems] of Object.entries(catGrps)) {
-    const cat = CATS[cid]; if(!cat) continue;
-    const fid = 'af_'+cid.replace(/[^a-z0-9]/gi,'_');
-    const open = window._actFolders && window._actFolders[fid];
-    foldersH += `<div class="act-folder"><div class="act-folder-hd" onclick="toggleActFolder('${fid}')"><span>${cat.ic} ${cat.nm}</span><span class="act-folder-ct">${citems.length}</span><span>${open?'▾':'›'}</span></div>${open?`<div class="act-folder-body">${citems.map(aItem).join('')}</div>`:''}</div>`;
+    const cat = CATS[cid]; if (!cat) { flat.push(...citems); continue; }
+    const fid  = 'af_' + cid.replace(/[^a-z0-9]/gi, '_');
+    const open = !!window._actFolders[fid];
+    foldersH += `<div class="act-folder">
+      <div class="act-folder-hd"
+           onclick="window._actFolders['${fid}']=!window._actFolders['${fid}'];renderPosts('${cur}')">
+        <span>${cat.ic} ${cat.nm}</span>
+        <span class="act-folder-ct">${citems.length}</span>
+        <span style="margin-left:auto">${open ? '▾' : '›'}</span>
+      </div>
+      ${open ? `<div class="act-folder-body">${citems.map(aItem).join('')}</div>` : ''}
+    </div>`;
   }
-  const listH = (foldersH + flat.map(aItem).join('')) || `<div class="act-empty">No activity yet for this filter.</div>`;
-  
+
+  // flat items go in "Other" folder only if there are also category folders
+  let flatH = '';
+  if (flat.length > 0) {
+    if (Object.keys(catGrps).length > 0) {
+      const fid = 'af___other__';
+      const open = !!window._actFolders[fid];
+      flatH = `<div class="act-folder">
+        <div class="act-folder-hd"
+             onclick="window._actFolders['${fid}']=!window._actFolders['${fid}'];renderPosts('${cur}')">
+          <span>📋 Other</span>
+          <span class="act-folder-ct">${flat.length}</span>
+          <span style="margin-left:auto">${open ? '▾' : '›'}</span>
+        </div>
+        ${open ? `<div class="act-folder-body">${flat.map(aItem).join('')}</div>` : ''}
+      </div>`;
+    } else {
+      flatH = flat.map(aItem).join('');
+    }
+  }
+
+  const listH = foldersH + flatH || `<div class="act-empty">No activity yet.</div>`;
+
   m.innerHTML = `<div class="posts-page">
-    <div class="posts-hd"><h1>📋 Posts &amp; Activity</h1>
-    <div style="color:var(--mu);font-size:.76rem;">Track what's been added, deleted, updated, pinned and favorited.</div></div>
+    <div class="posts-hd">
+      <h1>📋 Posts &amp; Activity</h1>
+      <p style="color:var(--mu);font-size:.75rem;margin-top:.2rem;">
+        Updates grouped by category. Click › to expand.
+      </p>
+    </div>
     <div class="posts-filters">${filtersH}</div>
     <div class="activity-list">${listH}</div>
   </div>`;
 }
 
-// Patch favorites/pins to log activity
-const _origTogglePin = togglePin;
-const _origToggleFav = toggleFav;
+function toggleActFolder(fid, cur) {
+  if (!window._actFolders) window._actFolders = {};
+  window._actFolders[fid] = !window._actFolders[fid];
+  renderPosts(cur || 'all');
+}
+
 
 function toggleActFolder(fid) {
   if (!window._actFolders) window._actFolders = {};
@@ -2370,6 +2544,229 @@ function toggleActFolder(fid) {
   const active = document.querySelector('.pf-btn.on');
   const f = active ? active.textContent.trim() : 'all';
   renderPosts(['all','add','update','delete','fav','pin','import'].find(x=>f.includes(x))||'all');
+}
+
+
+function mobActive(id) {
+  document.querySelectorAll('.mob-btn').forEach(b => b.classList.remove('on'));
+  const el = document.getElementById(id);
+  if (el) el.classList.add('on');
+}
+function updateMobBadge() {
+  const badge = document.getElementById('mobFavBadge');
+  if (!badge) return;
+  const n = favLinks.size;
+  badge.textContent = n > 99 ? '99+' : n;
+  badge.style.display = n > 0 ? 'block' : 'none';
+}
+
+
+function openShareModal() { openModal('shareOv'); }
+
+function exportFormat(fmt) {
+  const now = new Date();
+  const date = now.toISOString().split('T')[0];
+  const msg = document.getElementById('shareMsg');
+  if (msg) { msg.className='msg'; }
+
+  if (fmt === 'json') {
+    // Export as JSON
+    const out = {};
+    for (const [catId, secs] of Object.entries(D)) {
+      const cat = CATS[catId];
+      if (!cat) continue;
+      out[catId] = { name: cat.nm, icon: cat.ic, sections: {} };
+      for (const sec of secs) {
+        out[catId].sections[sec.n] = sec.e
+          .filter(e => !userDeleted.has(e.u))
+          .map(e => ({ name: e.l, url: e.u, desc: e.d, mirrors: e.m }));
+      }
+    }
+    dlBlob(JSON.stringify(out, null, 2), `linkonet-${date}.json`, 'application/json');
+    return;
+  }
+
+  if (fmt === 'csv') {
+    let csv = 'Category,Section,Name,URL,Description\n';
+    for (const [catId, secs] of Object.entries(D)) {
+      const cat = CATS[catId]; if (!cat) continue;
+      for (const sec of secs) {
+        for (const e of sec.e) {
+          if (userDeleted.has(e.u)) continue;
+          const row = [cat.nm, sec.n, e.l||'', e.u||'', e.d||'']
+            .map(v => '"' + String(v).replace(/"/g,'""') + '"').join(',');
+          csv += row + '\n';
+        }
+      }
+    }
+    dlBlob(csv, `linkonet-${date}.csv`, 'text/csv;charset=utf-8;');
+    return;
+  }
+
+  if (fmt === 'txt') {
+    let txt = 'LINKO NET - Library Export\n' + date + '\n\n';
+    for (const [catId, secs] of Object.entries(D)) {
+      const cat = CATS[catId]; if (!cat) continue;
+      txt += '=== ' + cat.ic + ' ' + cat.nm + ' ===\n';
+      for (const sec of secs) {
+        txt += '  [' + sec.n + ']\n';
+        for (const e of sec.e) {
+          if (userDeleted.has(e.u)) continue;
+          txt += '    • ' + (e.l||'') + ' — ' + (e.u||'') + (e.d?' ('+e.d+')':'') + '\n';
+        }
+      }
+      txt += '\n';
+    }
+    dlBlob(txt, `linkonet-${date}.txt`, 'text/plain;charset=utf-8;');
+    return;
+  }
+
+  if (fmt === 'pdf') {
+    // Open print dialog with a formatted page
+    const win = window.open('', '_blank');
+    let body = '<html><head><title>Linko Net Export</title>';
+    body += '<style>body{font-family:Arial,sans-serif;font-size:12px;margin:20px;}h1{color:#333;}h2{color:#555;margin-top:16px;border-bottom:1px solid #ccc;}h3{color:#777;margin:8px 0 4px;}a{color:#2563eb;text-decoration:none;}p{margin:2px 0;}</style>';
+    body += '</head><body><h1>Linko Net — Library Export</h1><p>' + date + '</p>';
+    for (const [catId, secs] of Object.entries(D)) {
+      const cat = CATS[catId]; if (!cat) continue;
+      body += '<h2>' + cat.ic + ' ' + cat.nm + '</h2>';
+      for (const sec of secs) {
+        body += '<h3>' + sec.n + '</h3>';
+        for (const e of sec.e) {
+          if (userDeleted.has(e.u)) continue;
+          body += '<p><a href="' + e.u + '">' + (e.l||e.u) + '</a>' + (e.d ? ' — ' + e.d : '') + '</p>';
+        }
+      }
+    }
+    body += '</body></html>';
+    win.document.write(body);
+    win.document.close();
+    win.print();
+    return;
+  }
+
+  // HTML formats (all produce standard Netscape bookmark HTML - compatible with all browsers)
+  // Chrome, Firefox, Safari, Opera all use the same Netscape HTML format
+  const browserNames = {
+    'html-universal': 'All Browsers',
+    'html-chrome': 'Chrome',
+    'html-firefox': 'Firefox',
+    'html-safari': 'Safari',
+    'html-opera': 'Opera',
+  };
+  const ts = Math.floor(now.getTime() / 1000);
+  let bm = '<!DOCTYPE NETSCAPE-Bookmark-file-1>\n';
+  bm += '<!-- This is an automatically generated file. It will be read and overwritten. DO NOT EDIT! -->\n';
+  bm += '<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">\n';
+  bm += '<TITLE>Linko Net Bookmarks</TITLE>\n';
+  bm += '<H1>Linko Net — ' + date + '</H1>\n<DL><p>\n';
+  bm += '    <DT><H3 ADD_DATE="' + ts + '">Linko Net</H3>\n    <DL><p>\n';
+  for (const [catId, secs] of Object.entries(D)) {
+    const cat = CATS[catId]; if (!cat) continue;
+    bm += '        <DT><H3>' + cat.nm + '</H3>\n        <DL><p>\n';
+    for (const sec of secs) {
+      const secDisplay = sec.n.replace(' > ', ' / ');
+      bm += '            <DT><H3>' + secDisplay + '</H3>\n            <DL><p>\n';
+      for (const e of sec.e) {
+        if (userDeleted.has(e.u)) continue;
+        const t = e.d ? e.l + ' - ' + e.d : (e.l||e.u);
+        bm += '                <DT><A HREF="' + e.u + '" ADD_DATE="' + ts + '">' + t + '</A>\n';
+      }
+      bm += '            </DL><p>\n';
+    }
+    bm += '        </DL><p>\n';
+  }
+  bm += '    </DL><p>\n</DL>';
+  const suffix = fmt === 'html-universal' ? '' : '-' + fmt.replace('html-','');
+  dlBlob(bm, `linkonet-bookmarks${suffix}-${date}.html`, 'text/html;charset=utf-8;');
+}
+
+function dlBlob(content, filename, mime) {
+  try {
+    // Add BOM for UTF-8 CSV/TXT files (helps Excel and other apps)
+    const needsBOM = mime.includes('csv') || mime.includes('plain');
+    const bom = needsBOM ? '\uFEFF' : '';
+    const blob = new Blob([bom + content], {type: mime});
+    // Use msSaveBlob for IE/Edge legacy
+    if (window.navigator && window.navigator.msSaveBlob) {
+      window.navigator.msSaveBlob(blob, filename);
+    } else {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = filename; a.style.display = 'none';
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(() => { document.body.removeChild(a); URL.revokeObjectURL(url); }, 200);
+    }
+    const msg = document.getElementById('shareMsg');
+    if (msg) { msg.className = 'msg ok'; msg.textContent = '✅ ' + filename; }
+    showToast('✅ ' + filename);
+  } catch(err) {
+    showToast('❌ Download failed: ' + err.message);
+  }
+}
+
+
+// ════════ LANGUAGE SYSTEM ════════
+const TRANSLATIONS = {"en": {"app_name": "Linko Net", "home": "Home", "favorites": "Favorites", "add": "Add", "posts": "Posts", "settings": "Settings", "wiki": "Wiki", "tools": "Tools", "search": "Search 24,000+ links…", "update": "⟳ Update", "import": "⬆ Import", "export": "⬇ Export", "add_link": "＋ Add New Link", "about": "🦊 About", "reset_all": "🗑 Reset", "reset_full": "Delete Everything", "reset_updates": "Delete Only Last Updates", "reset_activity": "Clear Activity Log", "reset_full_desc": "Remove all imported and user-added links. Restore to original library.", "reset_updates_desc": "Remove only links added via Update/Import. Keep manually added links.", "reset_activity_desc": "Remove all Posts/Activity history. Links are kept.", "reset_done": "✅ Reset complete", "cancel": "Cancel", "theme": "🎨 Theme", "language": "🌐 Language", "link_counts": "🔢 Show Link Counts", "auto_expand": "📂 Auto-Expand First Section", "link_actions": "✏️ Link Actions", "no_favs": "No favorites yet.", "no_activity": "No activity yet.", "sections": "📂 Sections", "actions_on": "Actions ON", "actions_off": "Actions OFF", "deleted": "🗑 Deleted", "all": "All", "added": "➕ Added", "updates": "🔄 Updates", "delete_filter": "🗑 Deleted", "favs": "❤️ Favs", "imports": "📥 Imports", "by_saad": "BY SAAD MOUNIR"}, "it": {"app_name": "Linko Net", "home": "Home", "favorites": "Preferiti", "add": "Aggiungi", "posts": "Attività", "settings": "Impostazioni", "wiki": "Wiki", "tools": "Strumenti", "search": "Cerca 24.000+ link…", "update": "⟳ Aggiorna", "import": "⬆ Importa", "export": "⬇ Esporta", "add_link": "＋ Aggiungi Link", "about": "🦊 Info", "reset_all": "🗑 Reset", "reset_full": "Elimina tutto", "reset_updates": "Elimina solo gli ultimi aggiornamenti", "reset_activity": "Cancella log attività", "reset_full_desc": "Rimuovi tutti i link importati. Ripristina la libreria originale.", "reset_updates_desc": "Rimuovi solo i link aggiunti tramite Aggiornamento/Importazione.", "reset_activity_desc": "Rimuovi tutta la cronologia. I link vengono mantenuti.", "reset_done": "✅ Reset completato", "cancel": "Annulla", "theme": "🎨 Tema", "language": "🌐 Lingua", "link_counts": "🔢 Mostra contatori", "auto_expand": "📂 Espandi prima sezione", "link_actions": "✏️ Azioni link", "no_favs": "Nessun preferito.", "no_activity": "Nessuna attività.", "sections": "📂 Sezioni", "actions_on": "Azioni ON", "actions_off": "Azioni OFF", "deleted": "🗑 Eliminati", "all": "Tutti", "added": "➕ Aggiunti", "updates": "🔄 Aggiornamenti", "delete_filter": "🗑 Eliminati", "favs": "❤️ Preferiti", "imports": "📥 Importazioni", "by_saad": "BY SAAD MOUNIR"}, "fr": {"app_name": "Linko Net", "home": "Accueil", "favorites": "Favoris", "add": "Ajouter", "posts": "Activité", "settings": "Paramètres", "wiki": "Wiki", "tools": "Outils", "search": "Rechercher 24 000+ liens…", "update": "⟳ Mettre à jour", "import": "⬆ Importer", "export": "⬇ Exporter", "add_link": "＋ Ajouter un lien", "about": "🦊 À propos", "reset_all": "🗑 Réinitialiser", "reset_full": "Tout supprimer", "reset_updates": "Supprimer les dernières mises à jour", "reset_activity": "Effacer le journal d'activité", "reset_full_desc": "Supprimer tous les liens importés. Restaurer la bibliothèque originale.", "reset_updates_desc": "Supprimer uniquement les liens ajoutés via Mise à jour/Importation.", "reset_activity_desc": "Supprimer tout l'historique. Les liens sont conservés.", "reset_done": "✅ Réinitialisation terminée", "cancel": "Annuler", "theme": "🎨 Thème", "language": "🌐 Langue", "link_counts": "🔢 Afficher les compteurs", "auto_expand": "📂 Développer la première section", "link_actions": "✏️ Actions sur les liens", "no_favs": "Aucun favori.", "no_activity": "Aucune activité.", "sections": "📂 Sections", "actions_on": "Actions ON", "actions_off": "Actions OFF", "deleted": "🗑 Supprimés", "all": "Tout", "added": "➕ Ajoutés", "updates": "🔄 Mises à jour", "delete_filter": "🗑 Supprimés", "favs": "❤️ Favoris", "imports": "📥 Importations", "by_saad": "PAR SAAD MOUNIR"}, "es": {"app_name": "Linko Net", "home": "Inicio", "favorites": "Favoritos", "add": "Añadir", "posts": "Actividad", "settings": "Ajustes", "wiki": "Wiki", "tools": "Herramientas", "search": "Buscar 24.000+ enlaces…", "update": "⟳ Actualizar", "import": "⬆ Importar", "export": "⬇ Exportar", "add_link": "＋ Añadir enlace", "about": "🦊 Acerca de", "reset_all": "🗑 Restablecer", "reset_full": "Eliminar todo", "reset_updates": "Eliminar solo las últimas actualizaciones", "reset_activity": "Borrar registro de actividad", "reset_full_desc": "Eliminar todos los enlaces importados. Restaurar la biblioteca original.", "reset_updates_desc": "Eliminar solo los enlaces añadidos mediante Actualización/Importación.", "reset_activity_desc": "Eliminar todo el historial. Los enlaces se conservan.", "reset_done": "✅ Restablecimiento completado", "cancel": "Cancelar", "theme": "🎨 Tema", "language": "🌐 Idioma", "link_counts": "🔢 Mostrar contadores", "auto_expand": "📂 Expandir primera sección", "link_actions": "✏️ Acciones de enlace", "no_favs": "Sin favoritos.", "no_activity": "Sin actividad.", "sections": "📂 Secciones", "actions_on": "Acciones ON", "actions_off": "Acciones OFF", "deleted": "🗑 Eliminados", "all": "Todo", "added": "➕ Añadidos", "updates": "🔄 Actualizaciones", "delete_filter": "🗑 Eliminados", "favs": "❤️ Favoritos", "imports": "📥 Importaciones", "by_saad": "POR SAAD MOUNIR"}, "ar": {"app_name": "لينكو نت", "home": "الرئيسية", "favorites": "المفضلة", "add": "إضافة", "posts": "النشاط", "settings": "الإعدادات", "wiki": "ويكي", "tools": "أدوات", "search": "ابحث في أكثر من 24.000 رابط…", "update": "⟳ تحديث", "import": "⬆ استيراد", "export": "⬇ تصدير", "add_link": "＋ إضافة رابط", "about": "🦊 حول", "reset_all": "🗑 إعادة تعيين", "reset_full": "حذف كل شيء", "reset_updates": "حذف آخر التحديثات فقط", "reset_activity": "مسح سجل النشاط", "reset_full_desc": "إزالة جميع الروابط المستوردة. استعادة المكتبة الأصلية.", "reset_updates_desc": "إزالة الروابط المضافة عبر التحديث/الاستيراد فقط.", "reset_activity_desc": "إزالة كل سجل النشاط. يتم الاحتفاظ بالروابط.", "reset_done": "✅ تم إعادة التعيين", "cancel": "إلغاء", "theme": "🎨 المظهر", "language": "🌐 اللغة", "link_counts": "🔢 عرض العدادات", "auto_expand": "📂 توسيع القسم الأول", "link_actions": "✏️ إجراءات الروابط", "no_favs": "لا مفضلة بعد.", "no_activity": "لا نشاط بعد.", "sections": "📂 الأقسام", "actions_on": "الإجراءات ON", "actions_off": "الإجراءات OFF", "deleted": "🗑 المحذوفة", "all": "الكل", "added": "➕ المضافة", "updates": "🔄 التحديثات", "delete_filter": "🗑 المحذوفة", "favs": "❤️ المفضلة", "imports": "📥 الاستيرادات", "by_saad": "بواسطة سعد منير"}};
+const LANG_META = {
+  en: {flag:'🇬🇧', name:'EN'},
+  it: {flag:'🇮🇹', name:'IT'},
+  fr: {flag:'🇫🇷', name:'FR'},
+  es: {flag:'🇪🇸', name:'ES'},
+  ar: {flag:'🇸🇦', name:'AR', rtl:true},
+};
+
+function i18n(key) {
+  const lang = SETTINGS.lang || 'en';
+  return (TRANSLATIONS[lang] && TRANSLATIONS[lang][key]) || TRANSLATIONS['en'][key] || key;
+}
+
+function setLang(lang) {
+  SETTINGS.lang = lang;
+  localStorage.setItem('ln-settings', JSON.stringify(SETTINGS));
+  // Apply RTL for Arabic
+  document.documentElement.setAttribute('dir', lang === 'ar' ? 'rtl' : 'ltr');
+  // Update all data-i18n elements
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    el.textContent = i18n(key);
+  });
+  // Re-render to update dynamic strings
+  buildNav(); render();
+  // Close language picker if open
+  closeModal('langPickerOv');
+}
+
+function showLangPicker(onboarding) {
+  // Build language picker modal
+  const grid = document.getElementById('langGrid');
+  if (!grid) return;
+  const curLang = SETTINGS.lang || 'en';
+  grid.innerHTML = Object.entries(LANG_META).map(([code, meta]) =>
+    `<button class="lang-pick-btn ${curLang===code?'on':''}" onclick="setLang('${code}')">
+      <span class="lang-flag">${meta.flag}</span>
+      <span class="lang-code">${meta.name}</span>
+    </button>`
+  ).join('');
+  openModal('langPickerOv');
+  // If onboarding, mark as done when closed
+  if (onboarding) {
+    const btn = document.getElementById('langContinueBtn');
+    if (btn) btn.style.display = 'block';
+  }
+}
+
+function checkFirstRun() {
+  const done = localStorage.getItem('ln-lang-picked');
+  if (!done) {
+    showLangPicker(true);
+    localStorage.setItem('ln-lang-picked', '1');
+  } else {
+    // Apply saved lang on subsequent loads
+    const saved = SETTINGS.lang || 'en';
+    if (saved === 'ar') document.documentElement.setAttribute('dir', 'rtl');
+  }
 }
 
 // ════════════ INIT ════════════
@@ -2395,10 +2792,99 @@ if (SETTINGS.autoExp) {
   openSecs['lang_0'] = true;
 }
 
+window.addEventListener('scroll',function(){var b=document.getElementById('btt');if(b)b.classList.toggle('show',window.pageYOffset>280);});
 buildNav();
 render();
-updateNavBtns();
 updateTopbarBadges();
+updateMobBadge();
+setTimeout(checkFirstRun, 400);
 </script>
+<button id="btt" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mob-nav" id="mobNav">
+  <button class="mob-btn" id="mobHome" onclick="go('home');mobActive('mobHome')">
+    <span class="mob-ic">🏠</span>Home
+  </button>
+  <button class="mob-btn" id="mobFavs" onclick="goSpecial('__favs__');mobActive('mobFavs')">
+    <span class="mob-ic">❤️</span>
+    <span>Favorite</span>
+    <span class="mob-badge" id="mobFavBadge" style="display:none"></span>
+  </button>
+  <button class="mob-btn add-btn" onclick="openModal('addLinkOv')">
+    <span class="mob-ic">＋</span>
+  </button>
+  <button class="mob-btn" id="mobPosts" onclick="goSpecial('__posts__');mobActive('mobPosts')">
+    <span class="mob-ic">📋</span>Posts
+  </button>
+  <button class="mob-btn" id="mobSett" onclick="openModal('settOv');mobActive('mobSett')">
+    <span class="mob-ic">⚙️</span>Settings
+  </button>
+</nav>
+
+
+<!-- SHARE / EXPORT MODAL -->
+<div class="ov" id="shareOv" onclick="ovClick(event,'shareOv')">
+  <div class="modal" style="max-width:480px;">
+    <div class="modal-hd">
+      <h2>🔗 Share &amp; Export</h2>
+      <button class="close-btn" onclick="closeModal('shareOv')">✕</button>
+    </div>
+    <p class="sub">Export your library in any format, or share with others.</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.8rem;">
+      <button class="act-btn sec" style="margin:0;" onclick="exportFormat('html-universal')">
+        🌐 HTML (All Browsers)
+      </button>
+      <button class="act-btn sec" style="margin:0;" onclick="exportFormat('html-chrome')">
+        🟡 HTML (Chrome)
+      </button>
+      <button class="act-btn sec" style="margin:0;" onclick="exportFormat('html-firefox')">
+        🦊 HTML (Firefox)
+      </button>
+      <button class="act-btn sec" style="margin:0;" onclick="exportFormat('html-safari')">
+        🧭 HTML (Safari)
+      </button>
+      <button class="act-btn sec" style="margin:0;" onclick="exportFormat('json')">
+        📋 JSON
+      </button>
+      <button class="act-btn sec" style="margin:0;" onclick="exportFormat('csv')">
+        📊 Excel / CSV
+      </button>
+      <button class="act-btn sec" style="margin:0;" onclick="exportFormat('txt')">
+        📄 TXT
+      </button>
+      <button class="act-btn sec" style="margin:0;" onclick="exportFormat('pdf')">
+        📕 PDF
+      </button>
+    </div>
+
+    <div style="border-top:1px solid var(--bd);padding-top:.8rem;margin-top:.3rem;">
+      <div style="font-size:.72rem;font-weight:700;color:var(--mu2);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem;">Contact</div>
+      <div style="display:flex;gap:.5rem;">
+        <a class="mob-top-btn" style="flex:1;justify-content:center;text-decoration:none;" href="mailto:saadariano@gmail.com">
+          ✉️ Email
+        </a>
+        <a class="mob-top-btn" style="flex:1;justify-content:center;text-decoration:none;" href="https://wa.me/393899528528" target="_blank" rel="noopener">
+          💬 WhatsApp
+        </a>
+      </div>
+    </div>
+    <div class="msg" id="shareMsg"></div>
+  </div>
+</div>
+
+
+<!-- LANGUAGE PICKER MODAL -->
+<div class="ov" id="langPickerOv" onclick="">
+  <div class="modal" style="max-width:380px;text-align:center;">
+    <div style="font-size:3rem;margin-bottom:.5rem;">🪺</div>
+    <h2 style="margin-bottom:.2rem;">Linko Net</h2>
+    <p style="color:var(--mu);font-size:.8rem;margin-bottom:1.2rem;">Choose your language to continue</p>
+    <div class="lang-grid" id="langGrid"></div>
+    <button class="act-btn" id="langContinueBtn" style="margin-top:1rem;display:none;" onclick="closeModal('langPickerOv')">Continue →</button>
+  </div>
+</div>
+
 </body>
 </html>
